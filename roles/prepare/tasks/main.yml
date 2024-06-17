@@ -32,7 +32,7 @@
             owner=root
             group=root
             mode=0644
-  when: mechatrax_release != "buster" and mechatrax_release != "stretch"
+  when: mechatrax_release != "buster"
 
 - name: add mechatrax old apt repository
   template: src=mechatrax-old.list
@@ -40,7 +40,7 @@
             owner=root
             group=root
             mode=0644
-  when: mechatrax_release == "buster" or mechatrax_release == "stretch"
+  when: mechatrax_release == "buster"
 
 - name: update caches
   apt: update_cache=yes
