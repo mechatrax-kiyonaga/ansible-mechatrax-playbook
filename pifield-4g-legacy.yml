@@ -6,5 +6,6 @@
     - purge
     - upgrade
     - 4gpi
+    - netconf
     - sleepi3
     - tweak
