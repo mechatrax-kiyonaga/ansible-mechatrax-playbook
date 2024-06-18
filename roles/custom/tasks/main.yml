@@ -1,0 +1,12 @@
+---
+- name: activation SSH
+  command: raspi-config nonint do_ssh 0
+
+- name: activation VNC
+  command: raspi-config nonint do_vnc 0
+
+- name: install additional packages
+  apt: name={{ install_packages_desktop }} state=latest
+
+- name: activation Desktop boot
+  command: raspi-config nonint do_boot_behaviour B3

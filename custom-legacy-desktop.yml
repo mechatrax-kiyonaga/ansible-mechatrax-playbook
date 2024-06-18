@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - prepare
+    - purge
+    - upgrade
+    - 4gpi
+    - netconf
+    - sleepi3
+    - tweak
+    - custom
