@@ -2,3 +2,4 @@
 install_packages_desktop:
   - lightdm
   - raspberrypi-ui-mods
+  - gpicview
