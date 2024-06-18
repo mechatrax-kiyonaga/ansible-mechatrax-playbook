@@ -10,3 +10,15 @@
 
 - name: activation Desktop boot
   command: raspi-config nonint do_boot_behaviour B3
+
+- name: ufw allow SSH
+  ufw:
+    insert: 1
+    rule: allow
+    port: '22'
+
+- name: ufw allow VNC
+  ufw:
+    insert: 2
+    rule: allow
+    port: '5900'
