@@ -2,6 +2,32 @@
 - name: purge packages
   apt: name={{ purge_packages_sleepi3 }} state=absent purge=yes
 
+- name: detect chroot
+  command: systemd-detect-virt --chroot
+  register: result
+  ignore_errors: true
+
+- name: change MODULES initramfs.conf
+  lineinfile:
+    path: /etc/initramfs-tools/initramfs.conf
+    regexp: '^MODULES='
+    line: 'MODULES=most'
+    backup: yes
+  when: result.rc == 0
+  register: lineinfile_result
+
 - name: install additional packages
   apt: name={{ install_packages_sleepi3 }} state=latest
 
+- name: restore backup file
+  copy:
+    src: "{{ lineinfile_result.backup_file }}"
+    dest: /etc/initramfs-tools/initramfs.conf
+    remote_src: yes
+  when: result.rc == 0 and lineinfile_result.backup_file is defined
+
+- name: remove backup file
+  file:
+    path: "{{ lineinfile_result.backup_file }}"
+    state: absent
+  when: result.rc == 0 and lineinfile_result.backup_file is defined
